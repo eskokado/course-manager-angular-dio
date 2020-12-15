@@ -20,7 +20,7 @@ export class CourseListComponent implements OnInit{
         this.retrieveAll();
     }
 
-    retrieveAll() {
+    retrieveAll(): void {
         this.courseService.retrieveAll().subscribe({
             next: courses => {
                 this._courses = courses;
@@ -28,6 +28,16 @@ export class CourseListComponent implements OnInit{
             },
             error: err => console.log('Erro: ', err)
         });
+    }
+
+    deleteById(courseId: number): void {
+        this.courseService.deleteById(courseId).subscribe({
+            next: () => {
+                console.log('Deleted with success');
+                this.retrieveAll();
+            },
+            error: err => console.log('Erro:', err)
+        })
     }
 
     set filter(value: string) {
